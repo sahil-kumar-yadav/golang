@@ -1,5 +1,8 @@
 This course covers various topics in GoLang, providing a comprehensive guide to learning the language. Each topic is organized into folders for easy navigation.
 
+# Difference Between C++ python and Go
+<img width="604" alt="image" src="https://github.com/user-attachments/assets/326c2c2e-f1b5-462b-ad9b-e889e0ca4d0e">
+
 
 # Key Features of Go language
 ## 1 . concurrency: Go is built with concurrency in mind and provides several features to make it easy to write concurrent code.
