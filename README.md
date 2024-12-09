@@ -1,5 +1,17 @@
 This course covers various topics in GoLang, providing a comprehensive guide to learning the language. Each topic is organized into folders for easy navigation.
 
+
+# Key Features of Go language
+## 1 . concurrency: Go is built with concurrency in mind and provides several features to make it easy to write concurrent code.
+a . It's the idea that different tasks can be performed independently ans simultaneously.
+b.  Easy task doesn't waot for the other to finish before starting their work.
+## 2. Garbage Collection: Go includes a garbage collector that automatically manages memory , making it easier for developers to write code without having 
+      to worry about memory management
+
+
+# 5.Install GOlang go | go modules and packages 
+
+
 Topics Covered:
 Array: Learn about arrays in GoLang, including CRUD operations.
 Data Conversion: Understand data conversion techniques in GoLang.
