@@ -516,87 +516,143 @@ func wrapper() func() int {
 - **Variadic Functions**: Great for accepting a variable number of arguments; always passed as a slice.
 - **Function Closures**: Understanding how functions can be returned from other functions and how closures capture their environment is key to mastering Go.
 
+## Callbacks - Passing Functions as Arguments
 
+In Go, you can pass functions as arguments to other functions. This allows you to define custom behavior that can be executed within the function.
 
-## Callbacks - Passing functions as argument
-```Go
-func visit(numbers []int, callback func(int2 int)){
-  for _, n := range numbers {
-    callback(n*2)
-  }
+### Example:
+```go
+func visit(numbers []int, callback func(int)) {
+    for _, n := range numbers {
+        callback(n * 2) // Calls the callback with each number multiplied by 2
+    }
 }
+
 func main() {
-  visit([]int{1,2,3,4}, func(n int){
-    fmt.Println(n, "- Printed withing the callback function.")
-  })
+    visit([]int{1, 2, 3, 4}, func(n int) {
+        fmt.Println(n, "- Printed within the callback function.") // The callback prints each processed number
+    })
 }
 ```
+### Explanation:
+- **`visit` function**: It takes a slice of integers (`numbers`) and a function (`callback`) as arguments. For each number in the slice, it calls the `callback` function, passing the number multiplied by 2.
+- **Main function**: In the `main`, an anonymous function is passed as the callback, which prints the number processed by `visit`.
+
+---
+
 ## Defer Keyword
 
-`Defer` used before a functions executes the function at the end of the scope of it, think of it as a destructor for the scope. usually used to close opened files/buffers so u open the file and closes it using defer in the next line to keep things clean. they're executed as a **stack**.
-```Go
+The `defer` keyword in Go allows you to delay the execution of a function until the surrounding function returns. It’s typically used for cleanup tasks, such as closing files or freeing resources. Think of `defer` as ensuring that certain actions occur before the function exits, no matter how the function ends (e.g., through return or error).
+
+### Example:
+```go
 fmt.Println("One")
-defer fmt.Println("Four")
-defer fmt.Println("Three")
+defer fmt.Println("Four")  // Will be executed last
+defer fmt.Println("Three") // Will be executed before "Four"
 fmt.Println("Two")
 
-//Prints One Two Three Four
+// Output:
+// One
+// Two
+// Three
+// Four
 ```
+### Explanation:
+- The `defer` statement is used to postpone the execution of the functions until the end of the current function's scope.
+- These deferred functions are executed in **LIFO (Last In, First Out)** order, meaning the last deferred function is executed first.
+
+---
+
 ## Receivers
 
-Receiver are the way you create a method for a specific type/struct 
-``` Go
+In Go, methods are associated with types (including structs) via **receivers**. A receiver is like the `this` keyword in other languages (such as Java), representing the instance of the type that the method is called on.
+
+### Example:
+```go
 type rect struct {
     width, height int
 }
 
+// Method with a receiver of type *rect (pointer to rect)
 func (r *rect) area() int {
     return r.width * r.height
 }
 
-//used as 
-r := rect{2,3}
-areaX := r.area()
-fmt.Println(areaX)
+func main() {
+    r := rect{2, 3} // Creating an instance of rect
+    areaX := r.area() // Calling the area method on the rect instance
+    fmt.Println(areaX) // Output: 6
+}
 ```
+### Explanation:
+- **`rect` struct**: Defines a rectangle with a width and height.
+- **`area` method**: Calculates the area of the rectangle. It uses a pointer receiver (`*rect`), meaning it can modify the `rect` instance if needed.
+- **Method Call**: The `area` method is called on an instance of `rect` to compute its area.
+
+---
+
 ## Overriding Receivers
-```Go
- type Person struct {
+
+In Go, you can define methods for both base types and types that **embed** other types (such as structs embedding other structs). While Go doesn’t have traditional inheritance, you can simulate it by embedding one struct into another. Methods can be overridden when embedding a struct.
+
+### Example:
+```go
+type Person struct {
     First string
-    Last string
-    Age int
-   }
+    Last  string
+    Age   int
+}
 
-   type Employee struct {
-    Person
-    ID string
-    Salary int
-   }
+type Employee struct {
+    Person  // Embedding Person struct into Employee
+    ID      string
+    Salary  int
+}
 
-   func (p Person) FullName() string{
+// Method for Person struct
+func (p Person) FullName() string {
     return p.First + " " + p.Last
-   }
+}
 
-   //Override
-   func (p Employee) FullName() string{
-    return p.ID + " " + p.First + " " + p.Last
-   }
+// Overriding method for Employee struct
+func (e Employee) FullName() string {
+    return e.ID + " " + e.First + " " + e.Last
+}
 
-
-   func main() {
+func main() {
+    // Create an instance of Employee with embedded Person
     x := Employee{
-      Person{
-        "Sherif",
-        "Abdel-Naby",
-        12},
-      "0ID12000ID",
-      9999,
+        Person: Person{
+            First: "Sherif",
+            Last:  "Abdel-Naby",
+            Age:   12,
+        },
+        ID:     "0ID12000ID",
+        Salary: 9999,
     }
 
-fmt.Println(x)
-fmt.Println(x.Person.FullName()) //Sherif Abdel-Naby
-fmt.Println(x.FullName()) 		   //0ID12000ID Sherif Abdel-Naby
+    fmt.Println(x)                     // Outputs: {Person: {Sherif Abdel-Naby 12} 0ID12000ID 9999}
+    fmt.Println(x.Person.FullName())    // Outputs: Sherif Abdel-Naby (using Person's FullName method)
+    fmt.Println(x.FullName())           // Outputs: 0ID12000ID Sherif Abdel-Naby (using Employee's overridden FullName method)
+}
 ```
+
+### Explanation:
+- **`Person` struct**: Defines a person with a first name, last name, and age.
+- **`Employee` struct**: Embeds `Person` and adds additional fields (ID and Salary). 
+- **Method Overriding**: The `Employee` struct overrides the `FullName` method of the `Person` struct to provide a custom implementation that includes the employee's ID.
+
+- **Output**:
+   - `x.Person.FullName()` calls the `FullName` method from the embedded `Person` struct.
+   - `x.FullName()` calls the overridden method from the `Employee` struct, which includes the employee’s ID.
+
+---
+
+### Key Takeaways:
+- **Callbacks**: Passing functions as arguments allows for more flexible and reusable code.
+- **Defer**: Useful for cleaning up resources or ensuring that certain actions are performed at the end of a function’s scope.
+- **Receivers**: Methods can be associated with structs through receivers, and using pointer receivers allows methods to modify the struct's fields.
+- **Overriding**: Go doesn’t have inheritance, but embedding structs allows you to simulate inheritance and override methods for more specific behavior.
 
 
 --------------------------------------------------------------------------
