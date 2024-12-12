@@ -343,126 +343,180 @@ func wrapper() func() int {
       
 --------------------------------------------------------------------------
       
-            
 
-# ✨Go functions and return types.
+# ✨ Go Functions and Return Types
 
-## Notes
+## Key Notes:
+- **Pass-by-Value vs Pass-by-Reference**: 
+  - In Go, **everything is passed by value**, except **arrays, slices, maps, and channels**, which are **reference types**. These types are passed by reference, meaning changes made to these variables inside the function affect the original variable.
+  
+- **Returning Addresses of Local Variables**: 
+  - Unlike in C, it’s perfectly fine to return the address of a local variable in Go. The storage associated with the local variable survives after the function returns, unlike C where this can lead to undefined behavior.
 
-- Again Everything is `passed by value` except **arrays, slices, maps and channels** which some calls r**eference types**, these types are passed by reference.
-- unlike in C, it's perfectly OK to return the address of a local variable; the storage associated with the variable survives after the function returns.
+---
 
-## Typical Function
-``` Go
-  // return void
-  func add(x int, y int)  {
-    fmt.Println("Hello, World!")
-  }
+## Typical Function Definitions
 
-  //-------arguments------return------
-  func add(x int, y int)  int {
-    return x + y
-  }
+A typical Go function consists of the following parts:
+1. **Arguments**: Variables passed to the function.
+2. **Return Type**: The type of value the function will return (if any).
 
-  //-----same type arguments-----------
-  func add(x, y int)  int {
-    return x + y
-  }
-```    
+### Examples:
+1. **Function without Return Value**:
+   ```go
+   func add(x int, y int) {
+       fmt.Println("Hello, World!")
+   }
+   ```
+   - This function takes two integers but doesn’t return anything. It simply prints a message.
 
-## Multiple Returns
-```Go
-  func swap(x, y string) (string, string) {
+2. **Function with Return Value**:
+   ```go
+   func add(x int, y int) int {
+       return x + y
+   }
+   ```
+   - This function returns the sum of two integers.
+
+3. **Shorthand for Same Type Arguments**:
+   ```go
+   func add(x, y int) int {
+       return x + y
+   }
+   ```
+   - You can skip specifying the type for each argument when they are the same type.
+
+---
+
+## Multiple Return Values
+
+Go allows you to return multiple values from a function, which is a powerful feature used in scenarios like swapping variables.
+
+### Example:
+```go
+func swap(x, y string) (string, string) {
     return y, x
-  }
+}
 
-  //in main
-  a, b := swap("hello", "world")
-  fmt.Println(a, b) //prints "world hello"
+func main() {
+    a, b := swap("hello", "world")
+    fmt.Println(a, b) // Prints: "world hello"
+}
 ```
-## Named Returns
+- **Focus**: Go’s multiple return values make it easy to return more than one value, unlike languages like C/C++ that support only a single return value.
 
-You can declare return variables and name them at the beginning, they are returned in the end.
+---
 
-*you can override the returns and return whatever you want at the return statement.
-```Go
-  //Returns x,y at the end.
-  func split(sum int) (x, y int) {
+## Named Return Values
+
+In Go, you can name the return variables. The function will return these named variables by default, and you can also override them in the return statement.
+
+### Example:
+```go
+func split(sum int) (x, y int) {
     x = sum * 4 / 9
     y = sum - x
-    return
-    //return a,b  <- u can override default return of x,y.
-  }
+    return // Implicit return of x, y
+}
 ```
-## Variadic Functions / Variable arguments list
+- **Focus**: Named return variables can make code cleaner and more readable, especially for functions with multiple returns.
 
-The rightmost argument can be a list of variable size (*slice*) of data.
-```Go
-  // x value here has no use for average. just illustrates the idea of having arguments
-  // then a variable number of arguments
-  func average(x int, values ...int) float64{
-    //print values
-    fmt.Println("Single argument value: ", x)
-    fmt.Println("Variable argument values: ", values)
+---
 
-    //calculate average
+## Variadic Functions (Variable Argument List)
+
+Go supports variadic functions, where the number of arguments passed can vary. These arguments are passed as a slice.
+
+### Example:
+```go
+func average(x int, values ...int) float64 {
+    fmt.Println("Single argument value:", x)
+    fmt.Println("Variable argument values:", values)
+
     total := 0
     for _, value := range values {
-      total += value
+        total += value
     }
 
     return float64(total) / float64(len(values))
-  }
+}
 
-  func main() {
-    avg := average(10,20,30,40,50)
-    println("Average:", avg)
-  }
+func main() {
+    avg := average(10, 20, 30, 40, 50)
+    fmt.Println("Average:", avg) // Outputs: Average: 30
+}
 ```
-## Type Function and Returning Functions
+- **Focus**: The `...` syntax allows the function to accept a variable number of arguments, and these arguments are accessed as a slice inside the function.
 
-1. Functions can be assigned to variables `func0 := func() int {x++; return x}` as anonymous functions or to another declared functions
-2. Functions that are returned from another functions has its own scope per returned function ( Closures yea ikr ? 🤷).
-``` Go
+---
 
+## Functions as First-Class Citizens (Returning Functions)
+
+Functions in Go can be treated as first-class citizens, meaning they can be assigned to variables, passed as arguments, and returned from other functions. 
+
+### Example 1: Assigning Functions to Variables
+```go
+func add(x int, y int) int {
+    return x + y
+}
+
+func main() {
+    sum := add
+    fmt.Println(sum(3, 4)) // Outputs: 7
+}
+```
+
+### Example 2: Returning Functions from Other Functions (Closures)
+```go
 package main
 
 var x = 0
 
 func main() {
-  //local x
-  x := 0
+    x := 0
+    func0 := func() int { x++; return x }
+    func1 := incrementGlobalX
+    func2 := wrapper()
+    func3 := wrapper()
 
-  func0 := func() int {x++; return x}
-  func1 := incrementGlobalX //without ()
-  func2 := wrapper()
-  func3 := wrapper()
+    fmt.Println(func0(), " : func0 (local x)")
+    fmt.Println(func1(), " : func1 (global x)")
+    fmt.Println(func2(), " : func2 (per func scope x1)")
+    fmt.Println(func3(), " : func3 (per func scope x2)")
 
-  println(func0(), " : func0 (local x)")
-  println(func1(), " : func1 (global x)")
-  println(func2(), " : func2 (per func scope x1)")
-  println(func3(), " : func3 (per func scope x2)")
-  println("Second Increment")
-  println(func0(), " : func0 (local x)")
-  println(func1(), " : func1 (global x)")
-  println(func2(), " : func2 (per func scope x1)")
-  println(func3(), " : func3 (per func scope x2)")
+    fmt.Println("Second Increment")
+    fmt.Println(func0(), " : func0 (local x)")
+    fmt.Println(func1(), " : func1 (global x)")
+    fmt.Println(func2(), " : func2 (per func scope x1)")
+    fmt.Println(func3(), " : func3 (per func scope x2)")
 }
 
-func incrementGlobalX() int  {
-  x++
-  return x
+func incrementGlobalX() int {
+    x++
+    return x
 }
 
 func wrapper() func() int {
-  x := 0
-  return func() int {
-    x++
-    return x
-  }
+    x := 0
+    return func() int {
+        x++
+        return x
+    }
 }
-```      
-      
+```
+- **Focus**: 
+   - The `wrapper` function returns a new function, which is a **closure**. Closures remember the environment in which they were created, including local variables.
+   - The example demonstrates local variables in the main function (`func0`), global variables (`func1`), and function-specific scopes (`func2` and `func3`).
+
+---
+
+## Summary and Key Points to Focus On:
+- **Pass-by-value**: Go passes all types by value, except reference types like slices, maps, and channels, which are passed by reference.
+- **Named Returns**: Useful for clarity, but the return values can be overridden in the return statement.
+- **Variadic Functions**: Great for accepting a variable number of arguments; always passed as a slice.
+- **Function Closures**: Understanding how functions can be returned from other functions and how closures capture their environment is key to mastering Go.
+
+
 
 ## Callbacks - Passing functions as argument
 ```Go
