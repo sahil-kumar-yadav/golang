@@ -814,55 +814,90 @@ For more advanced tricks with slices, you can explore the [Go Slice Tricks Wiki]
 - Using **range** to iterate over slices simplifies looping and accessing elements.
 - Functions like **copy**, **append**, and **cut** make working with slices efficient and flexible.
 
-By understanding these concepts, you can effectively manage and manipulate collections of data in Go.
-## Maps
 
-From [https://play.golang.org/p/U67R66Oab8r](https://play.golang.org/p/U67R66Oab8r)
-```Go
-// To create an empty map, use the builtin `make`:
-// `make(map[key-type]val-type)`.
-m := make(map[string]int)
+---
 
-// Set key/value pairs using typical `name[key] = val`
-// syntax.
+## Working with Maps in Go
+
+Maps in Go are used to store key-value pairs, where each key maps to a specific value. Here's a breakdown of how to create and manipulate maps.
+
+### 1. Creating a Map
+
+You can create an empty map using the `make` function:
+
+```go
+m := make(map[string]int)  // Creates a map with string keys and int values
+```
+
+### 2. Adding Key-Value Pairs
+
+To add key-value pairs to the map, use the following syntax:
+
+```go
 m["k1"] = 7
 m["k2"] = 13
+```
 
-// Printing a map with e.g. `fmt.Println` will show all of
-// its key/value pairs.
-fmt.Println("map:", m)
+### 3. Printing the Map
 
-// Get a value for a key with `name[key]`.
+You can print the map to display all key-value pairs:
+
+```go
+fmt.Println("map:", m)  // Outputs: map: map[k1:7 k2:13]
+```
+
+### 4. Accessing Values by Key
+
+You can retrieve a value using the key:
+
+```go
 v1 := m["k1"]
-fmt.Println("v1: ", v1)
+fmt.Println("v1:", v1)  // Outputs: v1: 7
+```
 
-// The builtin `len` returns the number of key/value
-// pairs when called on a map.
-fmt.Println("len:", len(m))
+### 5. Getting the Length of a Map
 
-// The builtin `delete` removes key/value pairs from
-// a map.
+Use the `len` function to get the number of key-value pairs in the map:
+
+```go
+fmt.Println("len:", len(m))  // Outputs: len: 2
+```
+
+### 6. Deleting a Key-Value Pair
+
+To remove a key-value pair from the map, use the `delete` function:
+
+```go
 delete(m, "k2")
-fmt.Println("map:", m)
+fmt.Println("map:", m)  // Outputs: map: map[k1:7]
+```
 
-// The optional second return value when getting a
-// value from a map indicates if the key was present
-// in the map. This can be used to disambiguate
-// between missing keys and keys with zero values
-// like `0` or `""`. Here we didn't need the value
-// itself, so we ignored it with the _blank identifier_
-// `_`.
+### 7. Checking if a Key Exists
+
+When accessing a key, you can check whether it exists by using the second return value:
+
+```go
 _, prs := m["k2"]
-fmt.Println("prs:", prs)
+fmt.Println("prs:", prs)  // Outputs: prs: false
+```
 
-//You can use zero value to check if value exist. use second return instead.
-fmt.Println("key not found (gets zero value):", m["notFoundKey"])
+If the key is not found, the second return value will be `false`. If the key exists, it will be `true`.
 
+### 8. Using Zero Value for Missing Keys
 
-// You can also declare and initialize a new map in
-// the same line with this syntax.
+When you access a non-existent key, Go returns the zero value for the map's value type (e.g., `0` for `int`, `""` for `string`):
+
+```go
+fmt.Println("key not found (gets zero value):", m["notFoundKey"])  // Outputs: key not found (gets zero value): 0
+```
+
+### 9. Declaring and Initializing a Map in One Line
+
+You can also initialize a map and declare it in a single line:
+
+```go
 n := map[string]int{"foo": 1, "bar": 2}
-fmt.Println("map:", n)
+fmt.Println("map:", n)  // Outputs: map: map[foo:1 bar:2]
 ```
 
 
