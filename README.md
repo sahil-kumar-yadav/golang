@@ -1,205 +1,200 @@
+
 This course covers various topics in GoLang, providing a comprehensive guide to learning the language. Each topic is organized into folders for easy navigation.
 
-![alt text](image.png)
+![go image](image.png)
 
-# Difference Between C++ python and Go
-<img width="604" alt="image" src="https://github.com/user-attachments/assets/326c2c2e-f1b5-462b-ad9b-e889e0ca4d0e">
+# Difference Between C++, Python, and Go
+![Image](https://github.com/user-attachments/assets/326c2c2e-f1b5-462b-ad9b-e889e0ca4d0e)
 
+# Key Features of Go Language
+## 1. Concurrency: 
+Go is built with concurrency in mind and provides several features to make it easy to write concurrent code.
+- a. It's the idea that different tasks can be performed independently and simultaneously.
+- b. Easy tasks don't wait for the other to finish before starting their work.
 
-# Key Features of Go language
-## 1 . concurrency: Go is built with concurrency in mind and provides several features to make it easy to write concurrent code.
-a . It's the idea that different tasks can be performed independently ans simultaneously.
-b.  Easy task doesn't waot for the other to finish before starting their work.
-## 2. Garbage Collection: Go includes a garbage collector that automatically manages memory , making it easier for developers to write code without having 
-      to worry about memory management
+## 2. Garbage Collection: 
+Go includes a garbage collector that automatically manages memory, making it easier for developers to write code without having to worry about memory management.
 
+# 5. Install Golang, Go Modules, and Packages
 
-# 5.Install GOlang go | go modules and packages 
+# Go - Golang Quick Intro Study Notes 📝💨
 
+This is my study notes for Golang. It is a quick intro/guide to start with Golang if you have prior programming experience.
 
-# Go - Golang quick intro study notes. 📝💨
-
-This is my study notes for Golang. It is a quick intro/guide to start with golang if you have prior programming experience.
-
-## Table of content
-- [🏓Go Fundmentals](#--go-fundmentals)
+## Table of Contents
+- [🏓 Go Fundamentals](#--go-fundamentals)
   * [Notes](#notes)
   * [Variables Declaration](#variables-declaration)
   * [Go Primitive Types](#go-primitive-types)
   * [Visibility](#visibility)
-  * [Take Input from console](#take-input-from-console)
+  * [Take Input from Console](#take-input-from-console)
   * [Iota](#iota)
   * [Go Pointers](#go-pointers)
   * [Go If-Conditions](#go-if-conditions)
   * [Go For-Loops](#go-for-loops)
-  * [Go For-Each loop](#go-for-each-loop)
+  * [Go For-Each Loop](#go-for-each-loop)
   * [Go Switch Statement](#go-switch-statement)
   * [Type Function and Returning Functions](#type-function-and-returning-functions)
-- [✨Go functions and return types.](#-go-functions-and-return-types)
+- [✨ Go Functions and Return Types](#-go-functions-and-return-types)
   * [Notes](#notes-1)
   * [Typical Function](#typical-function)
   * [Multiple Returns](#multiple-returns)
   * [Named Returns](#named-returns)
-  * [Variadic Functions / Variable arguments list](#variadic-functions---variable-arguments-list)
+  * [Variadic Functions / Variable Arguments List](#variadic-functions---variable-arguments-list)
   * [Type Function and Returning Functions](#type-function-and-returning-functions-1)
-  * [Callbacks - Passing functions as argument](#callbacks---passing-functions-as-argument)
+  * [Callbacks - Passing Functions as Argument](#callbacks---passing-functions-as-argument)
   * [Defer Keyword](#defer-keyword)
   * [Receivers](#receivers)
   * [Overriding Receivers](#overriding-receivers)
-- [🏗Go Data-Structures](#--go-data-structures)
+- [🏗 Go Data Structures](#--go-data-structures)
   * [Arrays](#arrays)
   * [Slices](#slices)
-  * [Iterating over a Slice](#iterating-over-a-slice)
+  * [Iterating Over a Slice](#iterating-over-a-slice)
   * [Appending to Slice](#appending-to-slice)
   * [Common Slice Functions](#common-slice-functions)
   * [Slices Tricks](#slices-tricks)
   * [Maps](#maps)
-- [🏢Go Structs / OOP](#--go-structs---oop)
+- [🏢 Go Structs / OOP](#--go-structs---oop)
   * [Notes](#notes-2)
-  * [Go supports](#go-supports)
+  * [Go Supports](#go-supports)
     + [Encapsulation](#encapsulation)
     + [Inheritance and Reusability](#inheritance-and-reusability)
     + [Polymorphism and Interfaces](#polymorphism-and-interfaces)
     + [Overriding](#overriding)
-- [🥂Go Concurrency](#--go-concurrency)
+- [🥂 Go Concurrency](#--go-concurrency)
   * [Intro](#intro)
   * [Notes](#notes-3)
-  * [mutex Locks, WaitGroups, and Atomic operations](#mutex-locks--waitgroups--and-atomic-operations)
+  * [Mutex Locks, WaitGroups, and Atomic Operations](#mutex-locks--waitgroups--and-atomic-operations)
   * [Go Channels](#go-channels)
     + [Example 1](#example-1)
     + [Example 2](#example-2)
     + [Example 3](#example-3)
     + [Example 4](#example-4)
     + [Example 5 - Semaphores](#example-5---semaphores)
-    + [Example 6 - Using channels as arguments/returns](#example-6---using-channels-as-arguments-returns)
-- [🐞Go Error Handling](#--go-error-handling)
+    + [Example 6 - Using Channels as Arguments/Returns](#example-6---using-channels-as-arguments-returns)
+- [🐞 Go Error Handling](#--go-error-handling)
   * [Notes](#notes-4)
   * [Example](#example)
 
+---
 
---------------------------------------------------------------------------
-
-
-# 🏓Go Fundmentals
+# 🏓 Go Fundamentals
 
 ## Notes
 
-1. Program Excuetable is at `package main/func main()`
-``` Go
-
-        package main        //Excuetables must be of package main
-        import "fmt"
+1. **Program Executable** is at `package main/func main()`
+```go
+package main        // Executables must be of package main
+import "fmt"
         
-        func main() {
-        	var g string = "Hello golang"
-        	println(g)
-        }
+func main() {
+    var g string = "Hello golang"
+    println(g)
+}
         
-        func function() string {
-        	return "Five of Diamonds"
-        }
+func function() string {
+    return "Five of Diamonds"
+}
 ```
 
 2. **Blank Identifier**: Use `_` to replace unused variables.
-3. there are two primitive ways to allocate to a pointer, `new()` and `make()`, they differ though, we will discuss that later, briefly new returns pointer, make return value. read [Doc](https://golang.org/doc/effective_go.html#allocation_new).
-4. Every thing is `passed by value` except **arrays, slices, maps and channels** which some calls r**eference types**, these types are passed by reference ( they internally have pointers, so no copying of the actual data happens when passing them) . 
+3. There are two primitive ways to allocate to a pointer: `new()` and `make()`. They differ though; we will discuss that later. Briefly, `new` returns a pointer, while `make` returns a value. Read [Doc](https://golang.org/doc/effective_go.html#allocation_new).
+4. Everything is **passed by value** except **arrays, slices, maps, and channels**, which are reference types. These types are passed by reference (they internally have pointers, so no copying of the actual data happens when passing them).
 5. Unlike in C, it's perfectly OK to return the address of a local variable; the storage associated with the variable survives after the function returns.
 
 ## Variables Declaration
 
-``` Go
+```go
+// Declaration
+var g string
 
-      //Declration
-      var g string
-      
-      //Assignment
-      g = "golang"
-      
-      //Declration & Assignment
-      var g = "golang"
-      var g string = "golang"
-      
-      //Shorthand - Declration & Assignmnet
-      a := 10
-      b := "golang"
+// Assignment
+g = "golang"
+
+// Declaration & Assignment
+var g = "golang"
+var g string = "golang"
+
+// Shorthand - Declaration & Assignment
+a := 10
+b := "golang"
 ```
 
-*Uninitialized variables are given its zero value *(e.g int = 0, string = "", bool = false)* 
+*Uninitialized variables are given their zero value (e.g., int = 0, string = "", bool = false)*
 
 ## Go Primitive Types
 
-The possible values for `bool` are `true` and `false`.
+The possible values for `bool` are `true` and `false`.
 
-- **uint8** : unsigned 8-bit integers `(0 to 255)`
-- **uint16** : unsigned 16-bit integers `(0 to 65535)`
-- **uint32** : unsigned 32-bit integers `(0 to 4294967295)`
-- **uint64** : unsigned 64-bit integers `(0 to 18446744073709551615)`
-- **int8** : signed 8-bit integers (`-128 to 127)`
-- **int16** : signed 16-bit integers `(-32768 to 32767)`
-- **int32** : signed 32-bit integers `(-2147483648 to 2147483647)`
-- **int64** : signed 64-bit integers `(-9223372036854775808 to 9223372036854775807)`
-- **int** is either **int64** or **int32** depends on the implementation.
-- **float32** : set of `all IEEE-754 32-bit` floating-point numbers
-- **float64** : set of `all IEEE-754 64-bit` floating-point numbers
-- **complex64** the set of all complex numbers with float32 real and imaginary parts
-- **complex128** the set of all complex numbers with float64 real and imaginary parts
-- byte alias for `uint8` rune alias for `int32`
+- **uint8**: unsigned 8-bit integers `(0 to 255)`
+- **uint16**: unsigned 16-bit integers `(0 to 65535)`
+- **uint32**: unsigned 32-bit integers `(0 to 4294967295)`
+- **uint64**: unsigned 64-bit integers `(0 to 18446744073709551615)`
+- **int8**: signed 8-bit integers `(-128 to 127)`
+- **int16**: signed 16-bit integers `(-32768 to 32767)`
+- **int32**: signed 32-bit integers `(-2147483648 to 2147483647)`
+- **int64**: signed 64-bit integers `(-9223372036854775808 to 9223372036854775807)`
+- **int** is either **int64** or **int32**, depending on the implementation.
+- **float32**: set of `all IEEE-754 32-bit` floating-point numbers
+- **float64**: set of `all IEEE-754 64-bit` floating-point numbers
+- **complex64**: the set of all complex numbers with float32 real and imaginary parts
+- **complex128**: the set of all complex numbers with float64 real and imaginary parts
+- `byte` alias for `uint8`, `rune` alias for `int32`
 
 ## Visibility
 
-If `variables`/`functions` starts with Uppercase character, it is accessible outside the scope of its package, if lowercase then it is only accessible inside its package.
+If `variables`/`functions` start with an uppercase character, they are accessible outside the scope of their package; if lowercase, they are only accessible inside their package.
 
-``` Go
+```go
 package myPkg
 
 var Uppercase = "This is accessible outside the pkg"
 var lowercase = "This is not accessible outside the pkg"
-func UppercaseFunc() string  {	return "This is accessible outside the pkg"}
-func lowercaseFunc() string  {	return "This is accessible outside the pkg"}
+func UppercaseFunc() string { return "This is accessible outside the pkg" }
+func lowercaseFunc() string { return "This is not accessible outside the pkg" }
 
 // Another file:
 package main
 import "myPkg"
 
 func main() {
-  //Accessible
+  // Accessible
   println(myPkg.Uppercase)
   println(myPkg.UppercaseFunc())
 
-  //Not Accessible
+  // Not Accessible
   println(myPkg.lowercase)
   println(myPkg.lowercaseFunc())
 }
 ```
-## Take Input from console
-``` Go
-//take input like cin >> in c++
+
+## Take Input from Console
+
+```go
+// Take input like cin >> in C++
 var x int = 1337
 var y string = "string value"
 
 _, err := fmt.Scan(&x, &y)
-fmt.Println("You Entered x:", x, " and y: ", y, " Error: ", err)
+fmt.Println("You Entered x:", x, " and y:", y, " Error:", err)
 
-//take input like scanf in C
+// Take input like scanf in C
 _, err = fmt.Scanf("%d %s", &x, &y)
-fmt.Println("You Entered x:", x, " and y: ", y, " Error: ", err)
+fmt.Println("You Entered x:", x, " and y:", y, " Error:", err)
 
-//take input with white spaces
+// Take input with white spaces
 var z string = "string"
-
 scanner := bufio.NewScanner(os.Stdin)
-
 scanner.Scan()
-
 z = scanner.Text()
-
 fmt.Println("You Entered z:", z)
 ```
+
 ## Iota
 
-iota in Go, is a value used within the **const** block, its value starts at 0 per block, and increment each time it is used again
+`iota` in Go is a value used within the **const** block. Its value starts at 0 per block and increments each time it is used again.
 
-``` Go
+```go
 const (
   c0 = iota  // c0 == 0
   c1 = iota  // c1 == 1
@@ -209,89 +204,98 @@ const (
 
 ## Go Pointers
 
-Pointers syntax is essentially like C/C++
-``` Go
+Pointers syntax is essentially like C/C++.
+
+```go
 var value int = 1000
 var pointer *int = &value
-println(value)                //1000
-println(pointer)              //0xfffffffff
-println(*pointer)             //1000
-(*pointer)++		  			      //1001
-*pointer = *pointer + 10	    //1011
-println(*pointer)			        //1011
-println(*pointer + *pointer)  //1011 + 1011 = 2022
+println(value)                // 1000
+println(pointer)              // 0xFFFFFFFFF
+println(*pointer)             // 1000
+(*pointer)++                  // 1001
+*pointer = *pointer + 10      // 1011
+println(*pointer)             // 1011
+println(*pointer + *pointer)  // 1011 + 1011 = 2022
 ```
 
 ## Go If-Conditions
 
-- Braces must open in the same line of the if/else ( Aghh 😕 )
-- in Go's if-statements **parentheses( )** around conditions **are optional**.  but the **braces { } are required** even for oneliners.
-``` Go
-  value := 10
-  if value < 10 {
-    println("Less Than 10")
-  } else if value > 10 {
-    println("Greater Than 10")
-  } else {
-    println("Equals 10")
-  }
+- Braces must open in the same line as the if/else (Aghh 😕)
+- In Go's if-statements, **parentheses ( )** around conditions are optional, but the **braces { } are required** even for one-liners.
 
-  //if conditions with statment
-  //note that value is inscope of all if/else's 
-  if 	value := 10; value < 10 {
+```go
+value := 10
+if value < 10 {
+    println("Less Than 10")
+} else if value > 10 {
+    println("Greater Than 10")
+} else {
+    println("Equals 10")
+}
+
+// If conditions with statement
+// Note that value is in scope of all if/else's 
+if value := 10; value < 10 {
     println(value, "Less Than 10")
-  } else if value > 10{
+} else if value > 10 {
     println(value, "Greater Than 10")
-  }else{
+} else {
     println(value, "Equals 10")
-  }
+}
 ```
 
-Go doesn't have Ternary Operator ( x < 0 ? A : B ) 🤷
+Go doesn't have a Ternary Operator (`x < 0 ? A : B`) 🤷
 
 ## Go For-Loops
 
-There are **3 forms** of for loops, also **there is no a while loop syntax in GO** (instead it is a form of for loops), also there is no do-while at all 
-``` Go
-  //For loop
-  for j := 7; j <= 9; j++ { /*stuff*/ }
+There are **3 forms** of for loops. Also, **there is no while loop syntax in Go** (instead, it's a form of for loops). There is also no do-while at all.
 
-  //While like for loop
-  i := 1
-  for i <= 3 { /*stuff*/ i++ }
+```go
+// For loop
+for j := 7; j <= 9; j++ { /*stuff*/ }
 
-  //Infinite Loop : While(true)
-  for { /*stuff*/ if (/*stuff*/) break }
+// While-like for loop
+i := 1
+for i <= 3 { /*stuff*/ i++ }
+
+// Infinite Loop: While(true)
+for { /*stuff*/ if (/*stuff*/) break }
 ```
-## Go For-Each loop
-``` Go
-for i, v := range arr {	//do stuff }
-for _, v := range arr {	//do stuff }
-for i, _ := range arr {	//do stuff }
+
+## Go For-Each Loop
+
+```go
+for i, v := range arr {  // do stuff }
+for _, v := range arr {  // do stuff }
+for i, _ := range arr {  // do stuff }
 ```
+
 ## Go Switch Statement
 
-Switch statements in GO doesn't require `break`; they will break by default, `fallthrough` keyword used to go to NEXT statement even if condition doesn't match, `fallthrough` is like a break so no code can be after it. however a workaround is to use `labels` and `goto`
-```Go
+Switch statements in Go don't require `break`; they will break by default. The `fallthrough` keyword is used to go to the NEXT statement even if the condition doesn't match. `fallthrough` is like a break, so no code can be after it. However, a workaround is to use `labels` and `goto`.
+
+```go
 i := 2
-fmt.Println("Switch for i = ", i, " goes to: ")
+fmt.Println("Switch for i =", i, "goes to: ")
 switch i {
   case 1:
     fmt.Println("one")
   case 2:
     fmt.Println("two")
     i = 4
-    fallthrough //goes to NEXT case even if doesn't match.
+    fallthrough // goes to NEXT case even if it doesn't match
   case 3:
     fmt.Println("three")
   case 4:
     fmt.Println("four")
-  case 5,6:
+  case 5, 6:
     fmt.Println("five or six")
   default:
     fmt.Println("default")
 }
 ```
+
+
 ## Type Function and Returning Functions
 
 1. Functions can be assigned to variables `func0 := func() int {x++; return x}`
