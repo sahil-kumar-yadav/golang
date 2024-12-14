@@ -1459,3 +1459,7 @@ Additional Notes:
 The course assumes basic knowledge of programming concepts.
 Feel free to explore the topics in any order based on your learning preferences.
 Happy coding!
+
+
+# fmt.Println() and println() both works 
+- println is an built-in function (into the runtime) which may eventually be removed, while the fmt package is in the standard library, which will persist
