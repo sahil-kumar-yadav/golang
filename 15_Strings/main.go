@@ -80,9 +80,9 @@ func main() {
 	fmt.Println("Repeat data: ", strings.Repeat(data, 3))
 
 	// ReplaceRune function
-	data = "This is a simple string"
-	fmt.Println("data: ", data)
-	fmt.Println("Replace 'a' with '*': ", strings.ReplaceRune(data, 'a', '*', -1)) // -1 means replace all occurrences
+	// data = "This is a simple string"
+	// fmt.Println("data: ", data)
+	// fmt.Println("Replace 'a' with '*': ", strings.ReplaceRune(data, 'a', '*', -1)) // -1 means replace all occurrences
 
 	// other sting functions
 	// ContainsAny function
