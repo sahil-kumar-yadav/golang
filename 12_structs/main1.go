@@ -1,3 +1,4 @@
+
 package main
 
 import (
@@ -49,3 +50,4 @@ func main() {
 	fmt.Println("Phone : ", e1.contact)
 	fmt.Println("Email : ", e1.contact.email)
 }
+
