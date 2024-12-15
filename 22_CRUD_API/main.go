@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"strings"
 )
 
 // {
@@ -21,9 +22,7 @@ type Todo struct {
 	Completed bool   `json:"completed"`
 }
 
-func main() {
-	fmt.Println("CRUD API in GOlang")
-	// https://jsonplaceholder.typicode.com/todos/1
+func makingGetRequest() {
 	url := "https://jsonplaceholder.typicode.com"
 	// url := "https://jsonplaceholder.typicode.commm"
 	res, err := http.Get(url + "/todos/1")
@@ -77,16 +76,48 @@ func main() {
 	fmt.Println("TodoA: ", todoA)
 
 	fmt.Println("--------------------------------")
+}
+
+func makingPostRequest() {
+	postUrl := "https://jsonplaceholder.typicode.com/todos"
+
 	// creating a new todo
-	newTodo := Todo{Title: "New Todo", Completed: false}
+	newTodo := Todo{
+		UserId:    1,
+		Id:        21,
+		Title:     "new todo from go",
+		Completed: true,
+	}
+	// conveting struct to json
 	newTodoJson, err := json.Marshal(newTodo)
 	if err != nil {
 		fmt.Println("Error marshalling data:", err)
 		return
 	}
-	fmt.Printf("New Todo JSON: %s\n", newTodoJson)
+	fmt.Println("New Todo JSON: ", string(newTodoJson))
+	// convert to json string
+	jsonString := string(newTodoJson)
+	// convert string data to reader
+	reader := strings.NewReader(jsonString)
 
-	// creating a new todo
+	// making a POST request
+	res, err := http.Post(postUrl, "application/json", reader)
+	if err != nil {
+		fmt.Println("Error making POST request:", err)
+		return
+	}
+	defer res.Body.Close()
+	data, _ := io.ReadAll(res.Body)
+	fmt.Println("res body data:", string(data))
+	fmt.Printf("Status Code: %d\n", res.StatusCode)
+	fmt.Println("--------------------------------")
 	// res, err = http.Post("https://jsonplaceholder.typicode.com/todos", "application/json", bytes.NewReader(newTodoJson))
+
+}
+func main() {
+	fmt.Println("CRUD API in GOlang")
+	// https://jsonplaceholder.typicode.com/todos/1
+	// makingGetRequest()
+	makingPostRequest()
 
 }
