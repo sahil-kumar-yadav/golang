@@ -114,10 +114,78 @@ func makingPostRequest() {
 	// res, err = http.Post("https://jsonplaceholder.typicode.com/todos", "application/json", bytes.NewReader(newTodoJson))
 
 }
+
+func makingUpdateRequest() {
+	updateUrl := "https://jsonplaceholder.typicode.com/todos/33"
+
+	// updating an existing todo
+	newTodo := Todo{
+		UserId:    1,
+		Id:        21,
+		Title:     "updated todo from go",
+		Completed: true,
+	}
+
+	// conveting struct to json
+	newTodoJson, err := json.Marshal(newTodo)
+	if err != nil {
+		fmt.Println("Error marshalling data:", err)
+		return
+	}
+	fmt.Println("Updated Todo JSON: ", string(newTodoJson))
+	// convert to json string
+	jsonString := string(newTodoJson)
+	// convert string data to reader
+	reader := strings.NewReader(jsonString)
+
+	// making a PUT requestusing reader
+	req, err := http.NewRequest(http.MethodPut, updateUrl, reader)
+	if err != nil {
+		fmt.Println("Error making PUT request:", err)
+		return
+	}
+	// Setting content-type to "application/json
+	req.Header.Set("Content-Type", "application/json")
+
+	client := http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error making PUT request:", err)
+		return
+	}
+	defer res.Body.Close()
+	data, _ := io.ReadAll(res.Body)
+	fmt.Println("res body data:", string(data))
+	fmt.Printf("Status Code: %d\n", res.StatusCode)
+
+}
+
+func makingDeltedRequest() {
+	delUrl := "https://jsonplaceholder.typicode.com/todos/33"
+	fmt.Println("Making delete request .......")
+	req, err := http.NewRequest(http.MethodDelete, delUrl, nil)
+	if err != nil {
+		fmt.Println("Error making DELETE request:", err)
+		return
+	}
+	client := http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Println("Error making DELETE request:", err)
+		return
+	}
+	defer res.Body.Close()
+	data, _ := io.ReadAll(res.Body)
+	fmt.Println("res body data:", string(data))
+	fmt.Printf("Status Code: %d\n", res.StatusCode)
+	fmt.Println("--------------------------------")
+}
 func main() {
 	fmt.Println("CRUD API in GOlang")
 	// https://jsonplaceholder.typicode.com/todos/1
 	// makingGetRequest()
-	makingPostRequest()
+	// makingPostRequest()
+	// makingUpdateRequest()
+	makingDeltedRequest()
 
 }
